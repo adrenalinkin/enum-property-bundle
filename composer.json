@@ -1,0 +1,33 @@
+{
+    "name":        "adrenalinkin/enum-property-bundle",
+    "description": "This bundle provides integration EnumMapper component with Symfony",
+    "type":        "symfony-bundle",
+    "keywords":    ["enum", "enum-mapper", "twig", "symfony2", "bundle"],
+    "license":     "MIT",
+
+    "authors": [
+        {
+            "email": "adrenalinkin@gmail.com",
+            "name":  "Viktor Linkin",
+            "role":  "Developer"
+        }
+    ],
+
+    "require": {
+        "adrenalinkin/enum-mapper": "dev-master",
+        "php":                      "~5.4",
+        "symfony/framework-bundle": "2.5.*",
+        "symfony/validator":        "~2.5",
+        "twig/twig":                "~1.12,>=1.12.3"
+    },
+
+    "suggest": {
+        "symfony/symfony": "Allows more advanced functionality with full Symfony package"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Linkin\\Bundle\\EnumPropertyBundle\\": ""
+        }
+    }
+}

@@ -1,0 +1,3 @@
+linkin_enum_property:
+    messages:
+        unexpected_value: Полученное значение "{{ value }}" не поддерживается. Допустимые значения - {{ allowed }}.
