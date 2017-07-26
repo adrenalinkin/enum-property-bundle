@@ -21,15 +21,15 @@ EnumProperty Bundle
 ### Примеры использования в Twig
 
 1. Получение человеко-понятного значения:
-``` twig
+```twig
     {{ status|fromDbToHuman('\\Acme\\Bundle\\AcmeBundle\\Entity\\Mapper\\GenderMapper') }}
 ```
 2. Получение человеко-понятного значения с уточнением домена переводов:
-``` twig
+```twig
     {{ status|fromDbToHuman('\\Acme\\Bundle\\AcmeBundle\\Entity\\Mapper\\GenderMapper', 'customDomain') }}
 ```
 3. Получение значение в формате базы данных на основании человеко-понятного значения:
-``` twig
+```twig
     {{ status|fromHumanToDb('\\Acme\\Bundle\\AcmeBundle\\Entity\\Mapper\\GenderMapper') }}
 ```
 
@@ -51,7 +51,7 @@ Enum валидатор
 
 ### Пример использования валидатора
 
-``` yml
+```yaml
 Acme\Bundle\AcmeBundle\Entity\User:
     properties:
         gender:
@@ -69,7 +69,7 @@ DI Сервис
 
 ### Пример использования DI сервиса
 
-``` yml
+```yaml
     parameters:
         acme_bundle.mapper.entity_gender.class:   Acme\Bundle\AcmeBundle\Mapper\EntityGenderMapper
     
