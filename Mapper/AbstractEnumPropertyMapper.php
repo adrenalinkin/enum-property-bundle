@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the LinkinEnumPropertyBundle package.
+ *
+ * (c) Viktor Linkin <adrenalinkin@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Linkin\Bundle\EnumPropertyBundle\Mapper;
 
 use Linkin\Component\EnumMapper\Mapper\AbstractEnumMapper;
@@ -31,18 +40,6 @@ abstract class AbstractEnumPropertyMapper extends AbstractEnumMapper
     {
         $this->translationDomain = $translationDomain;
         $this->translator        = $translator;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getAppropriateConstValue($prefixFrom, $constName)
-    {
-        $value = parent::getAppropriateConstValue($prefixFrom, $constName);
-
-        return $prefixFrom == self::PREFIX_DB && $this->translator
-            ? $this->translator->trans($value, [], $this->translationDomain)
-            : $value;
     }
 
     /**
@@ -83,5 +80,17 @@ abstract class AbstractEnumPropertyMapper extends AbstractEnumMapper
         $this->translator = $translator;
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getAppropriateConstValue($prefixFrom, $constName)
+    {
+        $value = parent::getAppropriateConstValue($prefixFrom, $constName);
+
+        return $prefixFrom === self::PREFIX_DB && $this->translator
+            ? $this->translator->trans($value, [], $this->translationDomain)
+            : $value;
     }
 }

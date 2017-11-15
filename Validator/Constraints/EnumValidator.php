@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the LinkinEnumPropertyBundle package.
+ *
+ * (c) Viktor Linkin <adrenalinkin@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Linkin\Bundle\EnumPropertyBundle\Validator\Constraints;
 
 use Linkin\Bundle\EnumPropertyBundle\Exception\UnsupportedMapperException;
@@ -33,7 +42,7 @@ class EnumValidator extends ChoiceValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof Enum) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Enum');
+            throw new UnexpectedTypeException($constraint, sprintf('%s\Enum', __NAMESPACE__));
         }
 
         $mapperClass = $constraint->mapperName;
@@ -54,7 +63,7 @@ class EnumValidator extends ChoiceValidator
 
         $constraint->message = $this->translator->trans(
             'linkin_enum_property.messages.unexpected_value',
-            ['{{ value }}' => $value, '{{ allowed }}' => implode(', ', $allowed)],
+            ['{{ value }}' => $value, '{{ allowed }}' => implode(', ', $allowed), ],
             'validators'
         );
 

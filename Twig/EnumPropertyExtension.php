@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the LinkinEnumPropertyBundle package.
+ *
+ * (c) Viktor Linkin <adrenalinkin@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Linkin\Bundle\EnumPropertyBundle\Twig;
 
 use Linkin\Bundle\EnumPropertyBundle\Exception\UnsupportedMapperException;
@@ -63,6 +72,14 @@ class EnumPropertyExtension extends \Twig_Extension
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'linkin_enum_property_extension';
+    }
+
+    /**
      * @param string      $mapperClass
      * @param string|null $translationDomain
      *
@@ -80,13 +97,5 @@ class EnumPropertyExtension extends \Twig_Extension
         $mapper = new $mapperClass();
 
         return $mapper->setTranslator($this->translator)->setTranslationDomain($translationDomain);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'linkin_enum_property_extension';
     }
 }
