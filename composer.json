@@ -16,9 +16,9 @@
     "require": {
         "adrenalinkin/enum-mapper": "~1.0",
         "php":                      ">=5.4",
-        "symfony/framework-bundle": "~2.5,<2.7.0",
-        "symfony/validator":        "~2.5,<2.7.0",
-        "twig/twig":                "~1.12,>=1.12.3"
+        "symfony/framework-bundle": "~2.5,<2.8",
+        "symfony/validator":        "~2.5,<2.8",
+        "twig/twig":                "^1.0||^2.0"
     },
 
     "suggest": {
