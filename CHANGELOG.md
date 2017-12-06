@@ -4,9 +4,9 @@
 - Added support of the Twig `2`.
 ### Removed
 - Removed support of the Symfony lower than `2.8` version.
-- Removed support of the Twig lower than `2` version.
 ### Changed
 - Minimal PHP version upped to `5.6`.
+- Minimal Twig version upped ti `1.35`.
 
 ## [1.0.3] - 2017-11-30
 ### Changed
