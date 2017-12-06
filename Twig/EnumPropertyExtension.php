@@ -72,14 +72,6 @@ class EnumPropertyExtension extends \Twig_Extension
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'linkin_enum_property_extension';
-    }
-
-    /**
      * @param string      $mapperClass
      * @param string|null $translationDomain
      *
