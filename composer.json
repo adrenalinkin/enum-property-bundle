@@ -1,8 +1,8 @@
 {
     "name":        "adrenalinkin/enum-property-bundle",
-    "description": "This bundle provides integration EnumMapper component with Symfony",
+    "description": "Provides integration EnumMapper component with Symfony",
     "type":        "symfony-bundle",
-    "keywords":    ["enum", "enum-mapper", "twig", "symfony2", "bundle"],
+    "keywords":    ["enum", "enum-mapper", "symfony", "bundle"],
     "license":     "MIT",
 
     "authors": [
@@ -15,9 +15,9 @@
 
     "require": {
         "adrenalinkin/enum-mapper": "~1.0",
-        "php":                      "~5.6",
-        "symfony/framework-bundle": "~2.8.0",
-        "symfony/validator":        "~2.8.0",
+        "php":                      "~5.6||~7.0",
+        "symfony/framework-bundle": "~2.8",
+        "symfony/validator":        "~2.8",
         "twig/twig":                "^1.35||^2.0"
     },
 

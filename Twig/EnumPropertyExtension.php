@@ -13,52 +13,17 @@ namespace Linkin\Bundle\EnumPropertyBundle\Twig;
 
 use Linkin\Bundle\EnumPropertyBundle\Exception\UnsupportedMapperException;
 
-use Symfony\Component\Translation\TranslatorInterface;
-
 /**
  * @author Viktor Linkin <adrenalinkin@gmail.com>
  */
 class EnumPropertyExtension extends \Twig_Extension
 {
     /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
-    }
-
-    /**
-     * @param string      $db
-     * @param string      $mapperClass
-     * @param string|null $translationDomain
+     * List of the all already called mappers
      *
-     * @throws UnsupportedMapperException
-     *
-     * @return int|string
+     * @var \Linkin\Component\EnumMapper\Mapper\AbstractEnumMapper[]
      */
-    public function fromDbToHuman($db, $mapperClass, $translationDomain = null)
-    {
-        return $this->getMapper($mapperClass, $translationDomain)->fromDbToHuman($db);
-    }
-
-    /**
-     * @param string $human
-     * @param string $mapperClass
-     *
-     * @throws UnsupportedMapperException
-     *
-     * @return int|string
-     */
-    public function fromHumanToDb($human, $mapperClass)
-    {
-        return $this->getMapper($mapperClass)->fromHumanToDb($human);
-    }
+    private $mapperCache = [];
 
     /**
      * {@inheritdoc}
@@ -66,28 +31,150 @@ class EnumPropertyExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('fromDbToHuman', [$this, 'fromDbToHuman']),
-            new \Twig_SimpleFilter('fromHumanToDb', [$this, 'fromHumanToDb']),
+            new \Twig_SimpleFilter('enum_to_human', [$this, 'fromDbToHuman']),
+            new \Twig_SimpleFilter('enum_to_db', [$this, 'fromHumanToDb']),
         ];
     }
 
     /**
-     * @param string      $mapperClass
-     * @param string|null $translationDomain
+     * {@inheritdoc}
+     */
+    public function getFunctions()
+    {
+        return [
+            new \Twig_SimpleFunction('enum_allowed_db', [$this, 'getAllowedDbValues']),
+            new \Twig_SimpleFunction('enum_allowed_human', [$this, 'getAllowedHumanValues']),
+            new \Twig_SimpleFunction('enum_map', [$this, 'getMap']),
+            new \Twig_SimpleFunction('enum_random_db', [$this, 'getRandomDbValue']),
+            new \Twig_SimpleFunction('enum_random_human', [$this, 'getRandomHumanValue']),
+        ];
+    }
+
+    /**
+     * Returns humanized value by received database value
+     * @see \Linkin\Component\EnumMapper\Mapper\AbstractEnumMapper::fromDbToHuman
+     *
+     * @param string $dbValue     Database value
+     * @param string $mapperClass Full name of the mapper class
+     *
+     * @return int|string
      *
      * @throws UnsupportedMapperException
-     *
-     * @return \Linkin\Bundle\EnumPropertyBundle\Mapper\AbstractEnumPropertyMapper
      */
-    private function getMapper($mapperClass, $translationDomain = null)
+    public function fromDbToHuman($dbValue, $mapperClass)
     {
-        if (!is_subclass_of($mapperClass, '\Linkin\Bundle\EnumPropertyBundle\Mapper\AbstractEnumPropertyMapper')) {
-            throw new UnsupportedMapperException('Mapper class should extends "AbstractEnumPropertyMapper"');
+        return $this->getMapper($mapperClass)->fromDbToHuman($dbValue);
+    }
+
+    /**
+     * Returns database value by received humanized value
+     * @see \Linkin\Component\EnumMapper\Mapper\AbstractEnumMapper::fromHumanToDb
+     *
+     * @param string $humanValue  Humanized value
+     * @param string $mapperClass Full name of the mapper class
+     *
+     * @return int|string
+     *
+     * @throws UnsupportedMapperException
+     */
+    public function fromHumanToDb($humanValue, $mapperClass)
+    {
+        return $this->getMapper($mapperClass)->fromHumanToDb($humanValue);
+    }
+
+    /**
+     * Returns list of the all registered database values
+     * @see \Linkin\Component\EnumMapper\Mapper\AbstractEnumMapper::getAllowedDbValues
+     *
+     * @param string $mapperClass Full name of the mapper class
+     * @param array  $except      List of the database values which should be excluded
+     *
+     * @return array
+     */
+    public function getAllowedDbValues($mapperClass, array $except = [])
+    {
+        return $this->getMapper($mapperClass)->getAllowedDbValues($except);
+    }
+
+    /**
+     * Returns list of the all registered humanized values
+     * @see \Linkin\Component\EnumMapper\Mapper\AbstractEnumMapper::getAllowedHumanValues
+     *
+     * @param string $mapperClass Full name of the mapper class
+     * @param array  $except      List of the humanized values which should be excluded
+     *
+     * @return array
+     */
+    public function getAllowedHumanValues($mapperClass, array $except = [])
+    {
+        return $this->getMapper($mapperClass)->getAllowedHumanValues($except);
+    }
+
+    /**
+     * Returns map of the all registered values in the 'key' => 'value' pairs.
+     * @see \Linkin\Component\EnumMapper\Mapper\AbstractEnumMapper::getMap
+     *
+     * @param string $mapperClass Full name of the mapper class
+     *
+     * @return array
+     */
+    public function getMap($mapperClass)
+    {
+        return $this->getMapper($mapperClass)->getMap();
+    }
+
+    /**
+     * Returns random database value
+     * @see \Linkin\Component\EnumMapper\Mapper\AbstractEnumMapper::getRandomDbValue
+     *
+     * @param string $mapperClass Full name of the mapper class
+     * @param array  $except      List of the database values which should be excluded
+     *
+     * @return string|int
+     */
+    public function getRandomDbValue($mapperClass, array $except = [])
+    {
+        return $this->getMapper($mapperClass)->getRandomDbValue($except);
+    }
+
+    /**
+     * Returns random humanized value
+     * @see \Linkin\Component\EnumMapper\Mapper\AbstractEnumMapper::getRandomHumanValue
+     *
+     * @param string $mapperClass Full name of the mapper class
+     * @param array  $except      List of the humanized values which should be excluded
+     *
+     * @return string|int
+     */
+    public function getRandomHumanValue($mapperClass, array $except = [])
+    {
+        return $this->getMapper($mapperClass)->getRandomHumanValue($except);
+    }
+
+    /**
+     * Returns instance of the mapper
+     *
+     * @param string $mapperClass Full name of the mapper class
+     *
+     * @return \Linkin\Component\EnumMapper\Mapper\AbstractEnumMapper
+     *
+     * @throws UnsupportedMapperException
+     */
+    private function getMapper($mapperClass)
+    {
+        if (isset($this->mapperCache[$mapperClass])) {
+            return $this->mapperCache[$mapperClass];
         }
 
-        /** @var \Linkin\Bundle\EnumPropertyBundle\Mapper\AbstractEnumPropertyMapper $mapper */
+        if (!is_subclass_of($mapperClass, 'Linkin\Component\EnumMapper\Mapper\AbstractEnumMapper')) {
+            throw new UnsupportedMapperException();
+        }
+
+        /** @var \Linkin\Component\EnumMapper\Mapper\AbstractEnumMapper $mapper */
         $mapper = new $mapperClass();
 
-        return $mapper->setTranslator($this->translator)->setTranslationDomain($translationDomain);
+        $this->mapperCache[$mapperClass] = $mapper;
+
+        return $mapper;
     }
 }

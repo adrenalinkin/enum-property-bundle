@@ -19,19 +19,25 @@ use Symfony\Component\Validator\Constraints\Choice;
 class Enum extends Choice
 {
     /**
-     * @var string
-     */
-    public $domain;
-
-    /**
+     * List of the database values which should be excluded from the allowed values
+     *
      * @var array
      */
     public $exclude = [];
 
     /**
+     * Full name of the mapper class
+     *
      * @var string
      */
     public $mapperName;
+
+    /**
+     * Override default choice error message
+     *
+     * @var string
+     */
+    public $message = 'linkin_enum_property.messages.unexpected_value';
 
     /**
      * {@inheritdoc}
@@ -39,13 +45,5 @@ class Enum extends Choice
     public function getRequiredOptions()
     {
         return ['mapperName'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function validatedBy()
-    {
-        return 'enum_validator';
     }
 }

@@ -16,4 +16,11 @@ namespace Linkin\Bundle\EnumPropertyBundle\Exception;
  */
 class UnsupportedMapperException extends \RuntimeException
 {
+    /**
+     * UnsupportedMapperException constructor.
+     */
+    public function __construct()
+    {
+        $this->message = 'Mapper class should extends "Linkin\Component\EnumMapper\Mapper\AbstractEnumMapper"';
+    }
 }

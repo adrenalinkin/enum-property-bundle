@@ -1,25 +1,8 @@
 parameters:
-    linkin_enum_property.mapper.abstract.class:    Linkin\Bundle\EnumPropertyBundle\Mapper\AbstractEnumPropertyMapper
-    linkin_enum_property.twig_extension.class:     Linkin\Bundle\EnumPropertyBundle\Twig\EnumPropertyExtension
-    linkin_enum_property.validator.enum.class:     Linkin\Bundle\EnumPropertyBundle\Validator\Constraints\EnumValidator
+    linkin_enum_property.twig_extension.class: Linkin\Bundle\EnumPropertyBundle\Twig\EnumPropertyExtension
 
 services:
-    linkin_enum_property.mapper.abstract:
-        class:      '%linkin_enum_property.mapper.abstract.class%'
-        abstract:   true
-        arguments:
-            - '@translator'
-
     linkin_enum_property.twig_extension:
         class:      '%linkin_enum_property.twig_extension.class%'
-        arguments:
-            - '@translator'
         tags:
             - { name: twig.extension }
-
-    linkin_enum_property.validator.enum:
-        class:      '%linkin_enum_property.validator.enum.class%'
-        calls:
-            - [setTranslator, ['@translator']]
-        tags:
-            - { name: validator.constraint_validator, alias: enum_validator }
