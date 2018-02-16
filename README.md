@@ -49,7 +49,7 @@ class AppKernel extends Kernel
 Usage
 -----
 
-Documentation for the [EnumMapper](https://github.com/adrenalinkin/enum-mapper/blob/master/README.RU.md) component.
+Documentation for the [EnumMapper](https://github.com/adrenalinkin/enum-mapper) component.
 As example we will use this class:
 
 ```php
