@@ -14,7 +14,7 @@ Enum Property Bundle [![In English](https://img.shields.io/badge/Switch_To-Engli
 
 Откройте консоль и, перейдя в директорию проекта, выполните следующую команду для загрузки наиболее подходящей
 стабильной версии этого бандла:
-```text
+```bash
     composer require adrenalinkin/enum-property-bundle
 ```
 *Эта команда подразумевает что [Composer](https://getcomposer.org) установлен и доступен глобально.*

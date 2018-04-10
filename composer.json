@@ -2,7 +2,7 @@
     "name":        "adrenalinkin/enum-property-bundle",
     "description": "Provides integration EnumMapper component with Symfony",
     "type":        "symfony-bundle",
-    "keywords":    ["enum", "enum-mapper", "symfony-bundle", "human-readable"],
+    "keywords":    ["symfony-bundle", "human-readable", "humanized-values", "enum-mapper"],
     "license":     "MIT",
 
     "authors": [
